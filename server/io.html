@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Socket.io test</title>
+    <script
+      src="https://cdn.socket.io/4.6.0/socket.io.min.js"
+      integrity="sha384-c79GN5VsunZvi+Q/WObgk2in0CbZsHnjEqvFxC5DxHn9lTfNce2WW6h2pH6u/kF+"
+      crossorigin="anonymous"
+    ></script>
+    <style>
+      form {
+        width: 100%;
+        display: flex;
+        position: fixed;
+        height: 50px;
+        top: 90%;
+      }
+      input {
+        width: 40%;
+        height: 100%;
+        font-size: 20px;
+      }
+      button {
+        height: 100%;
+        width: 20%;
+      }
+      #wrapper {
+        position: absolute;
+        height: 100vh;
+        width: 100%;
+        top: 0;
+        left: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="wrapper">
+      <ul></ul>
+      <form id="formSend">
+        <input placeholder="Event Name" />
+        <input placeholder="data to send" />
+        <button type="submit">Send</button>
+      </form>
+    </div>
+
+    <script defer>
+      let socket = io(
+        "https://pashabudzin-scaling-palm-tree-4pxqr55vjgg2qjww-3001.preview.app.github.dev/"
+      );
+
+      const form = document.getElementById("formSend");
+
+      form.addEventListener("submit", (e) => {
+        e.preventDefault();
+        console.log(e.target[0].value, JSON.parse(e.target[1].value));
+        socket.emit(e.target[0].value, JSON.parse(e.target[1].value));
+      });
+
+      socket.on("joined_room", (roomId) => {
+        console.log(`joined room ${JSON.stringify(roomId)}`);
+      });
+
+      socket.on("user_joined", (user) => {
+        console.log(`new user joined: ${JSON.stringify(user.name)}`)
+      })
+
+      socket.on("error", (err) => {
+        console.error(err);
+      })
+    </script>
+  </body>
+</html>
