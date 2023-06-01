@@ -1,10 +1,8 @@
 import { Server } from "socket.io";
 import { Server as httpServer } from "http";
-import * as crypto from "crypto";
 import { Rooms } from "./types/Rooms";
 import { Room } from "./types/Room";
 import { User } from "./types/User";
-import { emit } from "process";
 
 const getIo = (server: httpServer) => {
   const io = new Server(server, {});

@@ -40,6 +40,6 @@ export class Room {
   constructor(creator: User) {
     this._admin = creator;
     this._id = crypto.randomBytes(12).toString("base64");
-    this._users = [];
+    this._users = [creator];
   }
 }
